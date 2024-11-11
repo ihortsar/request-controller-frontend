@@ -1,0 +1,6 @@
+<div class="wrapper">
+    <app-select-period></app-select-period>
+    <mat-spinner *ngIf="analiserService.loading"></mat-spinner>
+    <app-iata-table *ngIf="!analiserService.loading"></app-iata-table>
+
+</div>

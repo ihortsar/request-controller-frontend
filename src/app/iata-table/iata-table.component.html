@@ -1,0 +1,17 @@
+<table *ngIf="analiserService.requestAnaliser&&analiserService.requestAnaliser.length > 0">
+    <thead>
+        <tr>
+            <th>Zeitstempel</th>
+            <th>Flughafen Code</th>
+            <th>Anzahl von Anfragen</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let iataRequest of analiserService.requestAnaliser">
+            <td>{{ iataRequest.time_of_stamp }}</td>
+            <td>{{ iataRequest.IATA }}</td>
+            <td [ngClass]="iataRequest.request_count < 50 ? 'countUnder50' : ''">
+                {{ iataRequest.request_count }}</td>
+        </tr>
+    </tbody>
+</table>

@@ -1,0 +1,15 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+app-select-period {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+mat-spinner{
+    height: 40px !important;
+    width: 40px !important;
+    align-self: center;
+}

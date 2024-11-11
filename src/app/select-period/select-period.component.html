@@ -1,0 +1,8 @@
+<mat-form-field>
+    <mat-select [(value)]="defaultValue">
+        @for (period of pof; track period) {
+        <mat-option [value]="period.value"
+            (click)="analiserService.setPeriod(period.value)">{{period.viewValue}}</mat-option>
+        }
+    </mat-select>
+</mat-form-field>
