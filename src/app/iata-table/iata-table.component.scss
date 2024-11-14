@@ -38,6 +38,11 @@ button {
     color: white;
 }
 
+.emptyResponse {
+    display: flex;
+    justify-content: center;
+}
+
 @media(max-width:800px) {
     table {
         width: 100%

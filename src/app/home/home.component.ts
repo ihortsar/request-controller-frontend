@@ -18,17 +18,19 @@ import { Subscription } from 'rxjs';
 
 export class HomeComponent {
   loadingSubscription: Subscription | undefined;
-  constructor(public analiserService: AnaliserService, private cdr: ChangeDetectorRef) { }
+  constructor(public analiserService: AnaliserService) { }
 
 
   async ngOnInit() {
     this.loadingSubscription = this.analiserService.loadingSubject.subscribe(data => {
       this.analiserService.loading = data;
     });
+  
     try {
       await this.analiserService.setPeriod('DAY');
     } catch (er) {
       console.log(er);
+
     }
   }
 

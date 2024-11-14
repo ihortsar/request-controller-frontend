@@ -1,4 +1,8 @@
-<table *ngIf="analiserService.requestAnaliser&&analiserService.requestAnaliser.length > 0">
+<div *ngIf="analiserService.noRequestsFound" class="emptyResponse">
+    <span >Keine Einträge zum ausgewälten Zeitabstand</span>
+</div>
+
+<table *ngIf="analiserService.requestAnaliser.length > 0">
     <thead>
         <tr>
             <th>Zeitstempel</th>

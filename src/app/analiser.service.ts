@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, lastValueFrom } from 'rxjs';
+import { finished } from 'stream';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +16,9 @@ export class AnaliserService {
   };
   requestAnaliser: any = []
   loadingSubject = new BehaviorSubject<boolean>(false);
+  noRequestsFoundSubject = new BehaviorSubject<boolean>(false);
   loading = false
-
+  noRequestsFound = false
   constructor(private http: HttpClient) { }
 
 
@@ -26,7 +28,9 @@ export class AnaliserService {
       const body = {
         time_period: period
       }
-      return await lastValueFrom(this.http.post<any[]>(url, body));
+      let result = await lastValueFrom(this.http.post<any[]>(url, body));
+      this.noRequestsFoundSubject.next(result.length === 0);
+      return result
     } catch (er) {
       console.log('error:', er);
       return [];
@@ -38,12 +42,14 @@ export class AnaliserService {
     if (this.periods[period].length === 0) {
       this.loadingSubject.next(true);
       this.periods[period] = await this.fetchAnalisedRequests(period);
-      this.requestAnaliser = this.periods[period];
       this.loadingSubject.next(false);
+      this.requestAnaliser = this.periods[period];
+
     } else {
       this.loadingSubject.next(true);
-      this.requestAnaliser = this.periods[period];
       setTimeout(() => {
+        this.requestAnaliser = this.periods[period];
+        this.noRequestsFoundSubject.next(this.requestAnaliser.length === 0);
         this.loadingSubject.next(false);
       }, 300);
     }
