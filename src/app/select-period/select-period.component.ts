@@ -23,10 +23,9 @@ export class SelectPeriodComponent {
   }
 
   pof: PeriodOfTime[] = [
-    { value: 'DAY', viewValue: 'in letzten 24 Std.' },
-    { value: 'WEEK', viewValue: 'in letzter Woche' },
-    { value: 'MONTH', viewValue: 'in letztem Monat' },
-    { value: 'YEAR', viewValue: 'in letztem Jahr' },
+    { value: 'DAY', viewValue: 'Gestern' },
+    { value: 'WEEK', viewValue: 'vor einer Woche' },
+
   ];
 
 

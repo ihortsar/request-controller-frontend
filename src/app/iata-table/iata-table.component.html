@@ -1,21 +1,41 @@
 <div *ngIf="analiserService.noRequestsFound" class="emptyResponse">
-    <span >Keine Einträge zum ausgewälten Zeitabstand</span>
+    <span>Keine Einträge zum ausgewälten Zeitabstand</span>
 </div>
 
-<table *ngIf="analiserService.requestAnaliser.length > 0">
+<table>
     <thead>
         <tr>
-            <th>Zeitstempel</th>
             <th>Flughafen Code</th>
-            <th>Anzahl von Anfragen</th>
+            <th>Letzter Zeitstempel <br>(vorher)</th>
+            <th>Letzter Zeitstempel <br>(heute)</th>
+            <th>Anfragen (vorher)</th>
+            <th>Anfragen (heute)</th>
+            <th>In-/Decrease %</th>
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let iataRequest of analiserService.requestAnaliser">
-            <td>{{ iataRequest.time_of_stamp }}</td>
-            <td>{{ iataRequest.IATA }}</td>
-            <td [ngClass]="iataRequest.request_count < 50 ? 'countUnder50' : ''">
-                {{ iataRequest.request_count }}</td>
+
+        <tr *ngFor=" let iataRequest of analiserService.requestAnaliser">
+            <td *ngIf="iataRequest.iata">{{ iataRequest.iata }}</td>
+            <td *ngIf="!iataRequest.iata">
+                {{iataRequest.piata}}</td>
+            <td>{{ getFormattedDate(iataRequest.ptimestamp)}}</td>
+
+            <td>{{ getFormattedDate(iataRequest.timestamp)}}</td>
+            <td>
+                {{iataRequest.prequests}}</td>
+            <td>
+                {{ iataRequest.requests }}
+            </td>
+            <td [ngClass]="
+            calculatePercentage(iataRequest) < -50&&iataRequest['prequests']-iataRequest['requests'] >50
+            ? 'countUnder50' 
+              : calculatePercentage(iataRequest) >= 50&&iataRequest['requests']-iataRequest['prequests'] >50
+              ? 'countOver100'
+              : '' ">
+                {{calculatePercentage(iataRequest)}}%
+            </td>
         </tr>
+
     </tbody>
 </table>
